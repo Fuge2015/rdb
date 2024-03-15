@@ -267,9 +267,6 @@ func (d *decode) decode() error {
 	//var lruClock int64
 	firstDB := true
 	for {
-		d.lruIdle = 0
-		d.lfuFreq = 0
-
 		objType, err := d.r.ReadByte()
 		if err != nil {
 			return errors.Wrap(err, errors.New("readfailed"))
@@ -344,6 +341,8 @@ func (d *decode) decode() error {
 				return errors.Trace(err)
 			}
 			expiry = 0
+			d.lruIdle = 0
+			d.lfuFreq = 0
 		}
 	}
 
